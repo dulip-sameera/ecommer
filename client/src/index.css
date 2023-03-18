@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel&family=Fauna+One&display=swap");
+
+:root {
+  /* COLORS */
+  --color-primary-100: #cccccc;
+  --color-primary-200: #999999;
+  --color-primary-300: #666666;
+  --color-primary-400: #333333;
+  --color-primary-500: #000000;
+  --color-primary-600: #000000;
+  --color-primary-700: #000000;
+  --color-primary-800: #000000;
+  --color-primary-900: #000000;
+
+  --color-secondary-100: #f7ccd2;
+  --color-secondary-200: #ef99a4;
+  --color-secondary-300: #e66677;
+  --color-secondary-400: #de3349;
+  --color-secondary-500: #d6001c;
+  --color-secondary-600: #ab0016;
+  --color-secondary-700: #800011;
+  --color-secondary-800: #56000b;
+  --color-secondary-900: #2b0006;
+
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #ebebeb;
+  --color-neutral-300: #e1e1e1;
+  --color-neutral-400: #d7d7d7;
+  --color-neutral-500: #cdcdcd;
+  --color-neutral-600: #a4a4a4;
+  --color-neutral-700: #7b7b7b;
+  --color-neutral-800: #525252;
+  --color-neutral-900: #292929;
+
+  /* BREAKPOINTS */
+  --breakpoint-sm: 600px;
+  --breakpoint-md: 900px;
+  --breakpoint-lg: 1200px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Fauna One", serif;
+  font-size: calc(15px + 0.390625vw);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Cinzel", serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
