@@ -42,6 +42,8 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html {
@@ -54,9 +56,4 @@ h2,
 h3,
 h4 {
   font-family: "Cinzel", serif;
-}
-
-body {
-  margin: 0;
-  padding: 0;
 }
