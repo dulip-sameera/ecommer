@@ -1,0 +1,74 @@
+.carousel {
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.carousel__slides {
+  width: 100%;
+  display: flex;
+  transition: transform ease-out;
+  transition-duration: 500ms;
+}
+
+.carousel__image--container {
+  min-width: 100%;
+  position: relative;
+}
+
+.carousel__image {
+  width: 100%;
+  height: 700px;
+  object-fit: cover;
+  object-position: fixed;
+}
+
+.carousel__buttons {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.carousel__button {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: none;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+}
+
+.carousel__button--icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.carousel__message {
+  position: absolute;
+  top: 46%;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 1rem;
+}
+
+.carousel__message > p {
+  font-size: 0.7rem;
+  color: var(--color-secondary-300);
+}
+
+.carousel__message > h1 {
+  font-size: 2rem;
+  font-weight: 400;
+  color: white;
+  letter-spacing: 0.2rem;
+}
+
+.carousel__message > p:nth-child(3) {
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 600;
+}
