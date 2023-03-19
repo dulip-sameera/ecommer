@@ -1,0 +1,84 @@
+.products {
+  padding-top: 3rem;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.products__heading > h2 {
+  font-size: 1rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.products__heading > h2 > span {
+  font-weight: 700;
+}
+
+/* TABS SECTION */
+
+.products__tabs {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.products__tabs > ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  list-style-type: none;
+}
+
+.products__tab {
+  list-style-type: none;
+  transition: all ease-in-out;
+  transition-duration: 500ms;
+  border-bottom: 1px solid transparent;
+}
+
+.products__tabs > ul > li:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.products__tab--selected {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+}
+
+.products__tab > button {
+  background-color: transparent;
+  font-size: 0.5rem;
+  border: none;
+  width: 5rem;
+  padding: 0.4rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .products {
+    width: 100%;
+  }
+
+  .products__tabs > ul {
+    flex-direction: column;
+  }
+
+  .products__tab {
+    border: none;
+  }
+
+  .products__tab--selected {
+    border: none;
+  }
+
+  .products__tab--selected > button {
+    font-weight: 600;
+  }
+
+  .products__tabs > ul > li:hover {
+    background-color: transparent;
+  }
+}
