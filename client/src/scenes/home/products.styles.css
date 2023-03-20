@@ -57,6 +57,21 @@
   align-items: center;
 }
 
+/* PRODUCTS LIST SECTION */
+
+.products__list--container {
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.products__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  column-gap: 2rem;
+  row-gap: 1rem;
+  justify-content: center;
+}
+
 @media (max-width: 600px) {
   .products {
     width: 100%;
