@@ -101,26 +101,28 @@ const Products = (props: Props) => {
       </div>
 
       {/* PRODUCT LIST */}
-      <section className="products__list">
-        {currentTab === TABS.ALL &&
-          allProducts.map((product) => (
-            <Product product={product} key={`${product.id}`} />
-          ))}
+      <section className="products__list--container">
+        <div className="products__list">
+          {currentTab === TABS.ALL &&
+            allProducts.map((product) => (
+              <Product product={product} key={`${product.id}`} />
+            ))}
 
-        {currentTab === TABS.NEW_ARRIVALS &&
-          newArrivals.map((product) => (
-            <Product product={product} key={`${product.id}`} />
-          ))}
+          {currentTab === TABS.NEW_ARRIVALS &&
+            newArrivals.map((product) => (
+              <Product product={product} key={`${product.id}`} />
+            ))}
 
-        {currentTab === TABS.BEST_SELLERS &&
-          bestSellers.map((product) => (
-            <Product product={product} key={`${product.id}`} />
-          ))}
+          {currentTab === TABS.BEST_SELLERS &&
+            bestSellers.map((product) => (
+              <Product product={product} key={`${product.id}`} />
+            ))}
 
-        {currentTab === TABS.TOP_RATED &&
-          topRated.map((product) => (
-            <Product product={product} key={`${product.id}`} />
-          ))}
+          {currentTab === TABS.TOP_RATED &&
+            topRated.map((product) => (
+              <Product product={product} key={`${product.id}`} />
+            ))}
+        </div>
       </section>
     </section>
   );
