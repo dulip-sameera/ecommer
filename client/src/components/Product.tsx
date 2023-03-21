@@ -5,6 +5,7 @@ import { RootState } from "@/state/store";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import "./product.styles.css";
 
 type Props = {
@@ -25,12 +26,13 @@ const Product = ({ product }: Props) => {
         onMouseOver={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        <img
-          className="product__card--img"
-          src={`${BASE_URLS.STRAPI}${product.attributes.image.data.attributes.formats.medium.url}`}
-          alt={`${product.attributes.name}`}
-        />
-
+        <Link to={`/product/${product.id}`}>
+          <img
+            className="product__card--img"
+            src={`${BASE_URLS.STRAPI}${product.attributes.image.data.attributes.formats.medium.url}`}
+            alt={`${product.attributes.name}`}
+          />
+        </Link>
         {hover && (
           <div className="product__card--buttons">
             <div className="product__changecount">
