@@ -1,22 +1,13 @@
 import { CartItem, Item } from "@/shared/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const i: Item = {
-  id: "",
-  shortDescription: "",
-  longDescription: "",
-  price: 1,
-  image: "",
-  category: "",
-};
-
-type State = {
+export type CartState = {
   isCartOpen: boolean;
   cart: CartItem[];
-  items: Item[];
+  items: Item[] | undefined;
 };
 
-const initialState: State = {
+const initialState: CartState = {
   isCartOpen: false,
   cart: [],
   items: [],
@@ -26,7 +17,7 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    setItems(state, action: PayloadAction<Item[]>) {
+    setItems(state, action: PayloadAction<Item[] | undefined>) {
       state.items = action.payload;
     },
     addToCart(state, action: PayloadAction<Item>) {
@@ -40,10 +31,10 @@ export const cartSlice = createSlice({
         state.cart.push({ item: action.payload, count: 1 });
       }
     },
-    removeFromCart(state, action: PayloadAction<string>) {
+    removeFromCart(state, action: PayloadAction<number>) {
       state.cart = state.cart.filter((item) => item.item.id !== action.payload);
     },
-    increaseCount(state, action: PayloadAction<string>) {
+    increaseCount(state, action: PayloadAction<number>) {
       const cartItem = state.cart.find(
         (item) => item.item.id === action.payload
       );
@@ -52,13 +43,19 @@ export const cartSlice = createSlice({
         cartItem.count += 1;
       }
     },
-    decreaseCount(state, action: PayloadAction<string>) {
+    decreaseCount(state, action: PayloadAction<number>) {
       const cartItem = state.cart.find(
         (item) => item.item.id === action.payload
       );
 
       if (cartItem && cartItem.count > 1) {
         cartItem.count -= 1;
+      }
+
+      if (cartItem && cartItem.count === 1) {
+        state.cart = state.cart.filter(
+          (item) => item.item.id !== action.payload
+        );
       }
     },
     setIsCartOpen(state, action: PayloadAction<boolean>) {
