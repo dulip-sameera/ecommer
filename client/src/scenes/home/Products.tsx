@@ -1,6 +1,9 @@
 import Product from "@/components/Product";
 import { useProducts } from "@/hook/useProducts";
-import { useState } from "react";
+import { setItems } from "@/state/cart.slice";
+import { RootState } from "@/state/store";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./products.styles.css";
 
 enum TABS {
@@ -13,8 +16,15 @@ enum TABS {
 type Props = {};
 
 const Products = (props: Props) => {
+  const [currentTab, setCurrentTab] = useState<TABS>(TABS.ALL);
   const { data, isError, isLoading, error } = useProducts();
-  const [currentTab, setCurrentTab] = useState(TABS.ALL);
+
+  const productList = useSelector((state: RootState) => state.cart.items);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setItems(data?.data));
+  }, [data]);
 
   if (isLoading) {
     return (
@@ -35,20 +45,20 @@ const Products = (props: Props) => {
   }
 
   // ALl
-  const allProducts = data.data;
+  const allProducts = productList;
 
   // NEW ARRIVALS
-  const newArrivals = data.data.filter(
+  const newArrivals = productList?.filter(
     (product) => product.attributes.category === TABS.NEW_ARRIVALS
   );
 
   // BEST SELLERS
-  const bestSellers = data.data.filter(
+  const bestSellers = productList?.filter(
     (product) => product.attributes.category === TABS.BEST_SELLERS
   );
 
   // TOP RATED
-  const topRated = data.data.filter(
+  const topRated = productList?.filter(
     (product) => product.attributes.category === TABS.TOP_RATED
   );
 
@@ -104,22 +114,22 @@ const Products = (props: Props) => {
       <section className="products__list--container">
         <div className="products__list">
           {currentTab === TABS.ALL &&
-            allProducts.map((product) => (
+            allProducts?.map((product) => (
               <Product product={product} key={`${product.id}`} />
             ))}
 
           {currentTab === TABS.NEW_ARRIVALS &&
-            newArrivals.map((product) => (
+            newArrivals?.map((product) => (
               <Product product={product} key={`${product.id}`} />
             ))}
 
           {currentTab === TABS.BEST_SELLERS &&
-            bestSellers.map((product) => (
+            bestSellers?.map((product) => (
               <Product product={product} key={`${product.id}`} />
             ))}
 
           {currentTab === TABS.TOP_RATED &&
-            topRated.map((product) => (
+            topRated?.map((product) => (
               <Product product={product} key={`${product.id}`} />
             ))}
         </div>
