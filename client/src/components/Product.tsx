@@ -21,41 +21,49 @@ const Product = ({ product }: Props) => {
 
   return (
     <div className="product__card">
-      <div className="product__card--image-container">
+      <div
+        className="product__card--image-container"
+        onMouseOver={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+      >
         <img
           className="product__card--img"
           src={`${BASE_URL}${product.attributes.image.data.attributes.formats.medium.url}`}
           alt={`${product.attributes.name}`}
         />
-        <div className="product__card--buttons">
-          <div className="product__changecount">
-            <button
-              className="product__changecount--increase"
-              onClick={() => dispatch(decreaseCount(product.id))}
-            >
-              <MinusIcon className="changecount--icon" />
-            </button>
-            <span className="product__changecount--count">
-              {productInCart ? productInCart.count : 0}
-            </span>
 
-            <button
-              className="product__changecount--decrease"
-              onClick={() => dispatch(increaseCount(product.id))}
-            >
-              <PlusIcon className="changecount--icon" />
-            </button>
-          </div>
+        {hover && (
+          <div className="product__card--buttons">
+            <div className="product__changecount">
+              <button
+                className="product__changecount--btn "
+                onClick={() => dispatch(decreaseCount(product.id))}
+                disabled={productInCart ? undefined : true}
+              >
+                <MinusIcon className="changecount--icon" />
+              </button>
+              <span className="product__changecount--count">
+                {productInCart ? productInCart.count : 0}
+              </span>
 
-          <div className="product__addtocart">
-            <button
-              className="product__addtocart--button"
-              onClick={() => dispatch(addToCart(product))}
-            >
-              ADD TO CART
-            </button>
+              <button
+                className="product__changecount--btn "
+                onClick={() => dispatch(increaseCount(product.id))}
+              >
+                <PlusIcon className="changecount--icon" />
+              </button>
+            </div>
+
+            <div className="product__addtocart">
+              <button
+                className="product__addtocart--button"
+                onClick={() => dispatch(addToCart(product))}
+              >
+                ADD TO CART
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <div className="product__card--body">
         <h4 className="product__card--body-heading">
