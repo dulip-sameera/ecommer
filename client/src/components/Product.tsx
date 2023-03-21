@@ -1,3 +1,4 @@
+import { BASE_URLS } from "@/shared/base_urls";
 import { Item } from "@/shared/types";
 import { addToCart, decreaseCount, increaseCount } from "@/state/cart.slice";
 import { RootState } from "@/state/store";
@@ -9,8 +10,6 @@ import "./product.styles.css";
 type Props = {
   product: Item;
 };
-
-const BASE_URL = "http://localhost:1337";
 
 const Product = ({ product }: Props) => {
   const cartItems = useSelector((state: RootState) => state.cart.cart);
@@ -28,7 +27,7 @@ const Product = ({ product }: Props) => {
       >
         <img
           className="product__card--img"
-          src={`${BASE_URL}${product.attributes.image.data.attributes.formats.medium.url}`}
+          src={`${BASE_URLS.STRAPI}${product.attributes.image.data.attributes.formats.medium.url}`}
           alt={`${product.attributes.name}`}
         />
 

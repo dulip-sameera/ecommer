@@ -1,3 +1,4 @@
+import { BASE_URLS } from "@/shared/base_urls";
 import { Item } from "@/shared/types";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -7,13 +8,12 @@ type StrapiResponse = {
   meta: any;
 };
 
-const STRAPI_BASE_URL = "http://localhost:1337/api";
 export const useProducts = () => {
   const query = useQuery<StrapiResponse, Error>({
     queryKey: ["product"],
     queryFn: () =>
       axios
-        .get(`${STRAPI_BASE_URL}/products?populate=image`)
+        .get(`${BASE_URLS.STRAPI_API}/products?populate=image`)
         .then((response) => response.data),
   });
 
