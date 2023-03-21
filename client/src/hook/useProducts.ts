@@ -10,7 +10,7 @@ type StrapiResponse = {
 
 export const useProducts = () => {
   const query = useQuery<StrapiResponse, Error>({
-    queryKey: ["product"],
+    queryKey: ["products"],
     queryFn: () =>
       axios
         .get(`${BASE_URLS.STRAPI_API}/products?populate=image`)
