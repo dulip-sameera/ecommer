@@ -7,6 +7,7 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import "./nav-bar.styles.css";
 import { RootState } from "@/state/store";
 import { setIsCartOpen } from "@/state/cart.slice";
+import { Link } from "react-router-dom";
 
 type Props = {};
 
@@ -18,7 +19,9 @@ const NavBar = (props: Props) => {
     <div className="navbar__container">
       <nav className="navbar">
         {/* BRAND LOGO */}
-        <div className="navbar__logo">ECOMMER</div>
+        <Link to={"/"} style={{ textDecoration: "none" }}>
+          <div className="navbar__logo">ECOMMER</div>
+        </Link>
 
         {/* LINKS */}
         <div className="navbar__links">
