@@ -54,8 +54,7 @@ export type CheckoutFormInitialValues = {
     state: string;
     zipCode: string;
   };
-  contactInformation: {
-    email: string;
-    phoneNumber: string;
-  };
+
+  email: string;
+  phoneNumber: string;
 };
