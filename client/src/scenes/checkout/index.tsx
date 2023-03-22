@@ -160,7 +160,7 @@ const Checkout = (props: Props) => {
             handleSubmit,
             setFieldValue,
           }) => (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="checkout__form--form">
               {currentStep === FORM_STEP.BILLING && (
                 <Shipping
                   values={values}
@@ -178,7 +178,7 @@ const Checkout = (props: Props) => {
               )}
 
               {currentStep === FORM_STEP.PAYMENT && (
-                <div>
+                <div className="checkout__form__btn__container">
                   <button
                     className="checkout__form__btn"
                     onClick={() => setCurrentStep(FORM_STEP.BILLING)}

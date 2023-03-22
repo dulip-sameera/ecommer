@@ -13,6 +13,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
+  margin: 0 1rem;
 }
 
 .checkout__form_step {
@@ -29,4 +30,34 @@
 .checkout__form__step--selected {
   color: var(--color-neutral-900);
   font-weight: 600;
+}
+
+.checkout__form--form {
+  width: 100%;
+}
+
+.checkout__form__btn {
+  width: 100%;
+  padding: 0.7rem;
+  margin-top: 2rem;
+  background-color: var(--color-neutral-900);
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+.checkout__form__btn:hover {
+  background-color: var(--color-neutral-200);
+  color: var(--color-neutral-900);
+}
+
+.checkout__form__btn__container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .checkout__form__btn__container {
+    flex-direction: column;
+  }
 }
