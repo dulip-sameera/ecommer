@@ -66,7 +66,7 @@ const Products = (props: Props) => {
     <section className="products">
       <div className="products__heading">
         <h2>
-          OUR FEATURED <span>PRODUCTS</span>
+          Our Featured <span>Products</span>
         </h2>
       </div>
 

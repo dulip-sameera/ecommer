@@ -69,7 +69,7 @@ const Carousel = (props: Props) => {
               }}
             >
               <p>--NEW ITEMS</p>
-              <h1>SUMMER SALE</h1>
+              <h1>Summer Sale</h1>
               <p>Discover More</p>
             </div>
           </div>
