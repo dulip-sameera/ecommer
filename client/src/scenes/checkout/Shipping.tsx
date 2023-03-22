@@ -55,7 +55,7 @@ const Shipping = ({
             type="checkbox"
             id="sameAsShippingAddress"
             className="form__shipping__checkbox--input"
-            onClick={() =>
+            onChange={() =>
               setFieldValue(
                 "shippingInformation.isSameAddress",
                 !values.shippingInformation.isSameAddress
