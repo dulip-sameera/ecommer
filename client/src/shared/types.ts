@@ -31,3 +31,31 @@ export type CartItem = {
   item: Item;
   count: number;
 };
+
+export type CheckoutFormInitialValues = {
+  billingInformation: {
+    firstName: string;
+    lastName: string;
+    country: string;
+    street1: string;
+    street2?: string;
+    city: string;
+    state: string;
+    zipCode: string;
+  };
+  shippingInformation: {
+    isSameAddress: boolean;
+    firstName: string;
+    lastName: string;
+    country: string;
+    street1: string;
+    street2?: string;
+    city: string;
+    state: string;
+    zipCode: string;
+  };
+  contactInformation: {
+    email: string;
+    phoneNumber: string;
+  };
+};
