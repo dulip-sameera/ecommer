@@ -3,8 +3,10 @@ import { spawn } from "child_process";
 import { FormikErrors, FormikTouched, getIn } from "formik";
 import "./shipping.styles.css";
 
+type Type = "billingInformation" | "shippingInformation";
+
 type Props = {
-  type: string;
+  type: Type;
   values: CheckoutFormInitialValues;
   errors: FormikErrors<CheckoutFormInitialValues>;
   handleBlur: {
@@ -58,6 +60,7 @@ const AddressForm = ({
             name={formattedName("firstName")}
             onBlur={handleBlur}
             onChange={handleChange}
+            value={values[type].firstName}
           />
           <span
             className={`form__shipping__input__box--span ${
@@ -90,6 +93,7 @@ const AddressForm = ({
             name={formattedName("lastName")}
             onBlur={handleBlur}
             onChange={handleChange}
+            value={values[type].lastName}
           />
           <span
             className={`form__shipping__input__box--span ${
@@ -122,6 +126,7 @@ const AddressForm = ({
             name={formattedName("country")}
             onBlur={handleBlur}
             onChange={handleChange}
+            value={values[type].country}
           />
           <span
             className={`form__shipping__input__box--span ${
@@ -154,6 +159,7 @@ const AddressForm = ({
             name={formattedName("street1")}
             onBlur={handleBlur}
             onChange={handleChange}
+            value={values[type].street1}
           />
           <span
             className={`form__shipping__input__box--span ${
@@ -186,6 +192,7 @@ const AddressForm = ({
             name={formattedName("street2")}
             onBlur={handleBlur}
             onChange={handleChange}
+            value={values[type].street2}
           />
           <span
             className={`form__shipping__input__box--span ${
@@ -218,6 +225,7 @@ const AddressForm = ({
             name={formattedName("city")}
             onBlur={handleBlur}
             onChange={handleChange}
+            value={values[type].city}
           />
           <span
             className={`form__shipping__input__box--span ${
@@ -250,6 +258,7 @@ const AddressForm = ({
             name={formattedName("state")}
             onBlur={handleBlur}
             onChange={handleChange}
+            value={values[type].state}
           />
           <span
             className={`form__shipping__input__box--span ${
@@ -282,6 +291,7 @@ const AddressForm = ({
             name={formattedName("zipCode")}
             onBlur={handleBlur}
             onChange={handleChange}
+            value={values[type].zipCode}
           />
           <span
             className={`form__shipping__input__box--span ${
