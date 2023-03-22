@@ -34,7 +34,13 @@ const SingleProduct = (props: Props) => {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <section className="oneproduct">
+        <div className="oneproduct__container" style={{ color: "red" }}>
+          <div>Loading...</div>
+        </div>
+      </section>
+    );
   }
 
   if (isError) {
@@ -43,10 +49,12 @@ const SingleProduct = (props: Props) => {
       error
     );
     return (
-      <div>
-        <h1>Something Went Wrong</h1>
-        <div>{error?.message}</div>
-      </div>
+      <section className="oneproduct">
+        <div className="oneproduct__container" style={{ color: "red" }}>
+          <h1>Something Went Wrong</h1>
+          <div>{error?.message}</div>
+        </div>
+      </section>
     );
   }
 
@@ -176,6 +184,8 @@ const SingleProduct = (props: Props) => {
         </div>
       </section>
     );
+  } else {
+    return <></>;
   }
 };
 
