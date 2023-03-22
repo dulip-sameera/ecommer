@@ -49,7 +49,13 @@ const Product = ({ product }: Props) => {
 
               <button
                 className="product__changecount--btn "
-                onClick={() => dispatch(increaseCount(product.id))}
+                onClick={() => {
+                  if (productInCart) {
+                    dispatch(increaseCount(product.id));
+                  } else {
+                    dispatch(addToCart(product));
+                  }
+                }}
               >
                 <PlusIcon className="changecount--icon" />
               </button>
