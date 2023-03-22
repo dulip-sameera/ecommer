@@ -89,6 +89,12 @@
   font-size: 0.6rem;
   border-radius: 5px;
   border: none;
-  background-color: var(--color-neutral-700);
+  background-color: var(--color-neutral-900);
   color: white;
+}
+
+.product__addtocart--button:hover {
+  background-color: var(--color-neutral-200);
+  color: var(--color-neutral-900);
+  cursor: pointer;
 }
