@@ -128,13 +128,21 @@ const SingleProduct = (props: Props) => {
           <div className="oneproduct__product__other">
             <ul className="oneproduct__product__other__tabs">
               <li
-                className="oneproduct__product__other__tabs--tab"
+                className={`oneproduct__product__other__tabs--tab ${
+                  currentTab === PRODUCT_TABS.DESCRIPTION
+                    ? "oneproduct__product__other__tabs--tab-selected"
+                    : ""
+                } `}
                 onClick={() => setCurrentTab(PRODUCT_TABS.DESCRIPTION)}
               >
                 DESCRIPTION
               </li>
               <li
-                className="oneproduct__product__other__tabs--tab"
+                className={`oneproduct__product__other__tabs--tab ${
+                  currentTab === PRODUCT_TABS.REVIEWS
+                    ? "oneproduct__product__other__tabs--tab-selected"
+                    : ""
+                } `}
                 onClick={() => setCurrentTab(PRODUCT_TABS.REVIEWS)}
               >
                 REVIEWS
@@ -151,7 +159,7 @@ const SingleProduct = (props: Props) => {
           {/* RELATED PRODUCTS */}
           <div className="oneproduct__related">
             <h2 className="oneproduct__related__heading--h2">
-              RELATED PRODUCTS
+              Related Products
             </h2>
 
             <div className="oneproduct__related__products">
