@@ -1,0 +1,32 @@
+.checkout__form {
+  width: 100%;
+  margin-top: 5rem;
+}
+
+.checkout__form__container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.checkout__form__step__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkout__form_step {
+  font-size: 0.7rem;
+  color: var(--color-neutral-800);
+}
+
+.checkout__form__step__divider--line {
+  flex: 1 1 100%;
+  height: 1px;
+  background-color: var(--color-neutral-800);
+}
+
+.checkout__form__step--selected {
+  color: var(--color-neutral-900);
+  font-weight: 600;
+}
