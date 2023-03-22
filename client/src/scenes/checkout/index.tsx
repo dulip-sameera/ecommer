@@ -1,38 +1,12 @@
+import { CheckoutFormInitialValues } from "@/shared/types";
 import { Formik } from "formik";
 import { FormikHelpers } from "formik/dist/types";
 import { useState } from "react";
 import * as Yup from "yup";
 import "./checkout.styles.css";
+import Shipping from "./Shipping";
 
-type InitialValues = {
-  billingInformation: {
-    firstName: string;
-    lastName: string;
-    country: string;
-    street1: string;
-    street2?: string;
-    city: string;
-    state: string;
-    zipCode: string;
-  };
-  shippingInformation: {
-    isSameAddress: boolean;
-    firstName: string;
-    lastName: string;
-    country: string;
-    street1: string;
-    street2?: string;
-    city: string;
-    state: string;
-    zipCode: string;
-  };
-  contactInformation: {
-    email: string;
-    phoneNumber: string;
-  };
-};
-
-const initialValues: InitialValues = {
+const initialValues: CheckoutFormInitialValues = {
   billingInformation: {
     firstName: "",
     lastName: "",
@@ -55,63 +29,62 @@ const initialValues: InitialValues = {
     state: "",
     zipCode: "",
   },
-  contactInformation: {
-    email: "",
-    phoneNumber: "",
-  },
+  email: "",
+  phoneNumber: "",
 };
 
-const validationSchema = Yup.object({
-  billingInformation: Yup.object({
-    firstName: Yup.string().required("required"),
-    lastName: Yup.string().required("required"),
-    country: Yup.string().required("required"),
-    street1: Yup.string().required("required"),
-    street2: Yup.string().required("required"),
-    city: Yup.string().required("required"),
-    state: Yup.string().required("required"),
-    zipCode: Yup.string().required("required"),
+const validationSchema = [
+  Yup.object({
+    billingInformation: Yup.object().shape({
+      firstName: Yup.string().required("required"),
+      lastName: Yup.string().required("required"),
+      country: Yup.string().required("required"),
+      street1: Yup.string().required("required"),
+      street2: Yup.string(),
+      city: Yup.string().required("required"),
+      state: Yup.string().required("required"),
+      zipCode: Yup.string().required("required"),
+    }),
+    shippingInformation: Yup.object({
+      isSameAddress: Yup.boolean(),
+      firstName: Yup.string().when("isSameAddress", {
+        is: false,
+        then: (schema) => schema.required("required"),
+      }),
+      lastName: Yup.string().when("isSameAddress", {
+        is: false,
+        then: (schema) => {
+          return schema.required("required");
+        },
+      }),
+      country: Yup.string().when("isSameAddress", {
+        is: false,
+        then: (schema) => schema.required("required"),
+      }),
+      street1: Yup.string().when("isSameAddress", {
+        is: false,
+        then: (schema) => schema.required("required"),
+      }),
+      street2: Yup.string(),
+      city: Yup.string().when("isSameAddress", {
+        is: false,
+        then: (schema) => schema.required("required"),
+      }),
+      state: Yup.string().when("isSameAddress", {
+        is: false,
+        then: (schema) => schema.required("required"),
+      }),
+      zipCode: Yup.string().when("isSameAddress", {
+        is: false,
+        then: (schema) => schema.required("required"),
+      }),
+    }),
   }),
-  shippingInformation: Yup.object({
-    isSameAddress: Yup.boolean(),
-    firstName: Yup.string().when("isSameAddress", {
-      is: false,
-      then: (schema) => schema.required("required"),
-    }),
-    lastName: Yup.string().when("isSameAddress", {
-      is: false,
-      then: (schema) => schema.required("required"),
-    }),
-    country: Yup.string().when("isSameAddress", {
-      is: false,
-      then: (schema) => schema.required("required"),
-    }),
-    street1: Yup.string().when("isSameAddress", {
-      is: false,
-      then: (schema) => schema.required("required"),
-    }),
-    street2: Yup.string().when("isSameAddress", {
-      is: false,
-      then: (schema) => schema.required("required"),
-    }),
-    city: Yup.string().when("isSameAddress", {
-      is: false,
-      then: (schema) => schema.required("required"),
-    }),
-    state: Yup.string().when("isSameAddress", {
-      is: false,
-      then: (schema) => schema.required("required"),
-    }),
-    zipCode: Yup.string().when("isSameAddress", {
-      is: false,
-      then: (schema) => schema.required("required"),
-    }),
-  }),
-  contactInformation: Yup.object({
+  Yup.object().shape({
     email: Yup.string().required(),
     phoneNumber: Yup.string().required(),
   }),
-});
+];
 
 enum FORM_STEP {
   BILLING = 0,
@@ -123,10 +96,21 @@ type Props = {};
 const Checkout = (props: Props) => {
   const [currentStep, setCurrentStep] = useState(FORM_STEP.BILLING);
   const handleSubmit = (
-    values: InitialValues,
-    actions: FormikHelpers<InitialValues>
+    values: CheckoutFormInitialValues,
+    actions: FormikHelpers<CheckoutFormInitialValues>
   ) => {
     setCurrentStep(FORM_STEP.PAYMENT);
+    // copies the billing address onto shipping address
+    if (
+      currentStep === FORM_STEP.BILLING &&
+      values.shippingInformation.isSameAddress
+    ) {
+      actions.setFieldValue("shippingInformation", {
+        ...values.billingInformation,
+        isSameAddress: true,
+      });
+    }
+
     console.log(currentStep);
 
     console.log(values);
@@ -165,7 +149,7 @@ const Checkout = (props: Props) => {
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
-          // validationSchema={validationSchema}
+          validationSchema={validationSchema[currentStep]}
         >
           {({
             values,
@@ -177,7 +161,35 @@ const Checkout = (props: Props) => {
             setFieldValue,
           }) => (
             <form onSubmit={handleSubmit}>
-              <button type="submit">Submit</button>
+              {currentStep === FORM_STEP.BILLING && (
+                <Shipping
+                  values={values}
+                  errors={errors}
+                  handleBlur={handleBlur}
+                  handleChange={handleChange}
+                  touched={touched}
+                  setFieldValue={setFieldValue}
+                />
+              )}
+              {currentStep === FORM_STEP.BILLING && (
+                <button type="submit" className="checkout__form__btn">
+                  NEXT
+                </button>
+              )}
+
+              {currentStep === FORM_STEP.PAYMENT && (
+                <div>
+                  <button
+                    className="checkout__form__btn"
+                    onClick={() => setCurrentStep(FORM_STEP.BILLING)}
+                  >
+                    BACK
+                  </button>
+                  <button type="submit" className="checkout__form__btn">
+                    PLACE ORDER
+                  </button>
+                </div>
+              )}
             </form>
           )}
           {/* if step 1 then Step 1 form */}
