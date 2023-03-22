@@ -4,6 +4,7 @@ import { FormikHelpers } from "formik/dist/types";
 import { useState } from "react";
 import * as Yup from "yup";
 import "./checkout.styles.css";
+import Payment from "./Payment";
 import Shipping from "./Shipping";
 
 const initialValues: CheckoutFormInitialValues = {
@@ -171,6 +172,17 @@ const Checkout = (props: Props) => {
                   setFieldValue={setFieldValue}
                 />
               )}
+
+              {currentStep === FORM_STEP.PAYMENT && (
+                <Payment
+                  values={values}
+                  errors={errors}
+                  handleBlur={handleBlur}
+                  handleChange={handleChange}
+                  touched={touched}
+                />
+              )}
+
               {currentStep === FORM_STEP.BILLING && (
                 <button type="submit" className="checkout__form__btn">
                   NEXT
