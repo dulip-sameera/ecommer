@@ -2,6 +2,11 @@
   margin-top: 2rem;
 }
 
+.form__shipping__input__header {
+  font-size: large;
+  font-weight: 500;
+}
+
 .form__shipping__checkbox {
   margin-top: 1rem;
 }
