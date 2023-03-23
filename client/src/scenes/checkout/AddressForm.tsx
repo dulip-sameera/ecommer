@@ -1,6 +1,13 @@
 import { CheckoutFormInitialValues } from "@/shared/types";
+import {
+  formattedError,
+  formattedHelper,
+  formattedName,
+  getValue,
+} from "@/utils/formTextFormatting";
 import { spawn } from "child_process";
 import { FormikErrors, FormikTouched, getIn } from "formik";
+import { useEffect, useState } from "react";
 import "./address.styles.css";
 
 type Type = "billingInformation" | "shippingInformation";
@@ -32,20 +39,8 @@ const AddressForm = ({
   handleChange,
   touched,
 }: Props) => {
-  // these functions allow for better code readability
-  const formattedName = (field: string) => `${type}.${field}`;
+  const [renderCount, setRenderCount] = useState(0);
 
-  const formattedError = (field: string) =>
-    Boolean(
-      getIn(touched, formattedName(field)) &&
-        getIn(errors, formattedName(field))
-    );
-
-  const formattedHelper = (field: string) =>
-    getIn(touched, formattedName(field)) && getIn(errors, formattedName(field));
-
-  const getValue = (field: string) =>
-    getIn(touched, formattedName(field)) && getIn(values, formattedName(field));
   return (
     <div>
       <div className="form__address__input_container">
@@ -53,31 +48,31 @@ const AddressForm = ({
           <input
             type="text"
             className={` ${
-              formattedError("firstName")
+              formattedError("firstName", type, touched, errors)
                 ? "form__address__input__box--input-invalid "
                 : "form__address__input__box--input"
             }`}
-            name={formattedName("firstName")}
+            name={formattedName("firstName", type)}
             onBlur={handleBlur}
             onChange={handleChange}
             value={values[type].firstName}
           />
           <span
             className={`form__address__input__box--span ${
-              getValue("firstName")
+              getValue("firstName", type, touched, values)
                 ? "form__address__input__box--input--contain__value--span"
                 : ""
             } ${
-              formattedError("firstName")
+              formattedError("firstName", type, touched, errors)
                 ? "form__address__input__box--span-invalid "
                 : ""
             }`}
           >
             First Name
           </span>
-          {formattedError("firstName") && (
+          {formattedError("firstName", type, touched, errors) && (
             <span className="form__address__input__box--error_message">
-              {formattedHelper("firstName")}
+              {formattedHelper("firstName", type, touched, errors)}
             </span>
           )}
         </div>
@@ -86,31 +81,31 @@ const AddressForm = ({
           <input
             type="text"
             className={` ${
-              formattedError("lastName")
+              formattedError("lastName", type, touched, errors)
                 ? "form__address__input__box--input-invalid "
                 : "form__address__input__box--input"
             }`}
-            name={formattedName("lastName")}
+            name={formattedName("lastName", type)}
             onBlur={handleBlur}
             onChange={handleChange}
             value={values[type].lastName}
           />
           <span
             className={`form__address__input__box--span ${
-              getValue("lastName")
+              getValue("lastName", type, touched, values)
                 ? "form__address__input__box--input--contain__value--span"
                 : ""
             } ${
-              formattedError("lastName")
+              formattedError("lastName", type, touched, errors)
                 ? "form__address__input__box--span-invalid "
                 : ""
             }`}
           >
             Last Name
           </span>
-          {formattedError("lastName") && (
+          {formattedError("lastName", type, touched, errors) && (
             <span className="form__address__input__box--error_message">
-              {formattedHelper("lastName")}
+              {formattedHelper("lastName", type, touched, errors)}
             </span>
           )}
         </div>
@@ -119,31 +114,31 @@ const AddressForm = ({
           <input
             type="text"
             className={` ${
-              formattedError("country")
+              formattedError("country", type, touched, errors)
                 ? "form__address__input__box--input-invalid "
                 : "form__address__input__box--input"
             }`}
-            name={formattedName("country")}
+            name={formattedName("country", type)}
             onBlur={handleBlur}
             onChange={handleChange}
             value={values[type].country}
           />
           <span
             className={`form__address__input__box--span ${
-              getValue("country")
+              getValue("country", type, touched, values)
                 ? "form__address__input__box--input--contain__value--span"
                 : ""
             } ${
-              formattedError("country")
+              formattedError("country", type, touched, errors)
                 ? "form__address__input__box--span-invalid "
                 : ""
             }`}
           >
             Country
           </span>
-          {formattedError("country") && (
+          {formattedError("country", type, touched, errors) && (
             <span className="form__address__input__box--error_message">
-              {formattedHelper("country")}
+              {formattedHelper("country", type, touched, errors)}
             </span>
           )}
         </div>
@@ -152,31 +147,31 @@ const AddressForm = ({
           <input
             type="text"
             className={` ${
-              formattedError("street1")
+              formattedError("street1", type, touched, errors)
                 ? "form__address__input__box--input-invalid "
                 : "form__address__input__box--input"
             }`}
-            name={formattedName("street1")}
+            name={formattedName("street1", type)}
             onBlur={handleBlur}
             onChange={handleChange}
             value={values[type].street1}
           />
           <span
             className={`form__address__input__box--span ${
-              getValue("street1")
+              getValue("street1", type, touched, values)
                 ? "form__address__input__box--input--contain__value--span"
                 : ""
             } ${
-              formattedError("street1")
+              formattedError("street1", type, touched, errors)
                 ? "form__address__input__box--span-invalid "
                 : ""
             }`}
           >
             Street Address
           </span>
-          {formattedError("street1") && (
+          {formattedError("street1", type, touched, errors) && (
             <span className="form__address__input__box--error_message">
-              {formattedHelper("street1")}
+              {formattedHelper("street1", type, touched, errors)}
             </span>
           )}
         </div>
@@ -185,31 +180,31 @@ const AddressForm = ({
           <input
             type="text"
             className={` ${
-              formattedError("street2")
+              formattedError("street2", type, touched, errors)
                 ? "form__address__input__box--input-invalid "
                 : "form__address__input__box--input"
             }`}
-            name={formattedName("street2")}
+            name={formattedName("street2", type)}
             onBlur={handleBlur}
             onChange={handleChange}
             value={values[type].street2}
           />
           <span
             className={`form__address__input__box--span ${
-              getValue("street2")
+              getValue("street2", type, touched, values)
                 ? "form__address__input__box--input--contain__value--span"
                 : ""
             } ${
-              formattedError("street2")
+              formattedError("street2", type, touched, errors)
                 ? "form__address__input__box--span-invalid "
                 : ""
             }`}
           >
             Street Address 2 (Optional)
           </span>
-          {formattedError("street2") && (
+          {formattedError("street2", type, touched, errors) && (
             <span className="form__address__input__box--error_message">
-              {formattedHelper("street2")}
+              {formattedHelper("street2", type, touched, errors)}
             </span>
           )}
         </div>
@@ -218,31 +213,31 @@ const AddressForm = ({
           <input
             type="text"
             className={` ${
-              formattedError("city")
+              formattedError("city", type, touched, errors)
                 ? "form__address__input__box--input-invalid "
                 : "form__address__input__box--input"
             }`}
-            name={formattedName("city")}
+            name={formattedName("city", type)}
             onBlur={handleBlur}
             onChange={handleChange}
             value={values[type].city}
           />
           <span
             className={`form__address__input__box--span ${
-              getValue("city")
+              getValue("city", type, touched, values)
                 ? "form__address__input__box--input--contain__value--span"
                 : ""
             } ${
-              formattedError("city")
+              formattedError("city", type, touched, errors)
                 ? "form__address__input__box--span-invalid "
                 : ""
             }`}
           >
             City
           </span>
-          {formattedError("city") && (
+          {formattedError("city", type, touched, errors) && (
             <span className="form__address__input__box--error_message">
-              {formattedHelper("city")}
+              {formattedHelper("city", type, touched, errors)}
             </span>
           )}
         </div>
@@ -251,31 +246,31 @@ const AddressForm = ({
           <input
             type="text"
             className={` ${
-              formattedError("state")
+              formattedError("state", type, touched, errors)
                 ? "form__address__input__box--input-invalid "
                 : "form__address__input__box--input"
             }`}
-            name={formattedName("state")}
+            name={formattedName("state", type)}
             onBlur={handleBlur}
             onChange={handleChange}
             value={values[type].state}
           />
           <span
             className={`form__address__input__box--span ${
-              getValue("state")
+              getValue("state", type, touched, values)
                 ? "form__address__input__box--input--contain__value--span"
                 : ""
             } ${
-              formattedError("state")
+              formattedError("state", type, touched, errors)
                 ? "form__address__input__box--span-invalid "
                 : ""
             }`}
           >
             State
           </span>
-          {formattedError("state") && (
+          {formattedError("state", type, touched, errors) && (
             <span className="form__address__input__box--error_message">
-              {formattedHelper("state")}
+              {formattedHelper("state", type, touched, errors)}
             </span>
           )}
         </div>
@@ -284,31 +279,31 @@ const AddressForm = ({
           <input
             type="text"
             className={` ${
-              formattedError("zipCode")
+              formattedError("zipCode", type, touched, errors)
                 ? "form__address__input__box--input-invalid "
                 : "form__address__input__box--input"
             }`}
-            name={formattedName("zipCode")}
+            name={formattedName("zipCode", type)}
             onBlur={handleBlur}
             onChange={handleChange}
             value={values[type].zipCode}
           />
           <span
             className={`form__address__input__box--span ${
-              getValue("zipCode")
+              getValue("zipCode", type, touched, values)
                 ? "form__address__input__box--input--contain__value--span"
                 : ""
             } ${
-              formattedError("zipCode")
+              formattedError("zipCode", type, touched, errors)
                 ? "form__address__input__box--span-invalid "
                 : ""
             }`}
           >
             Zip Code
           </span>
-          {formattedError("zipCode") && (
+          {formattedError("zipCode", type, touched, errors) && (
             <span className="form__address__input__box--error_message">
-              {formattedHelper("zipCode")}
+              {formattedHelper("zipCode", type, touched, errors)}
             </span>
           )}
         </div>
