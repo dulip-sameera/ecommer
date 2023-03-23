@@ -8,12 +8,13 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 export default factories.createCoreController(
   "api::order.order",
   ({ strapi }) => ({
-    // updating the create service
     async create(ctx) {
       try {
         const { products, email, username } = ctx.request.body;
 
-        const line_items = Promise.all(
+        console.log("error 1");
+
+        const line_items = await Promise.all(
           products.map(async (product) => {
             const item = await strapi
               .service("api::product.product")
@@ -33,6 +34,8 @@ export default factories.createCoreController(
           })
         );
 
+        console.log("error 2");
+
         const stripe_session = await stripe.checkout.sessions.create({
           payment_method_types: ["card"],
           customer_email: email,
@@ -42,6 +45,8 @@ export default factories.createCoreController(
           line_items: line_items,
         });
 
+        console.log("error 3");
+
         // create the order
         await strapi.service("api::order.order").create({
           data: {
@@ -50,6 +55,8 @@ export default factories.createCoreController(
             stripeSessionId: stripe_session.id,
           },
         });
+
+        console.log("error 4");
 
         return { id: stripe_session.id };
       } catch (error) {
