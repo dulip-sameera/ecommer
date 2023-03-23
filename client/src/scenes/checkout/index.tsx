@@ -6,6 +6,16 @@ import * as Yup from "yup";
 import "./checkout.styles.css";
 import Payment from "./Payment";
 import Shipping from "./Shipping";
+import { loadStripe } from "@stripe/stripe-js";
+import { useSelector } from "react-redux";
+import { RootState } from "@/state/store";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { postOrder } from "@/api/postOrder";
+
+const stripe_promise = loadStripe(
+  "pk_test_51MmbBULWQMX2FtDzveCC2hQ7a6ydNmt4S87TNUFIMnDBKG5jKzMusdXIS4hs7oCsUdbSzrGWyqtwIMjdowyxyvr400jdBJ9MFN"
+);
 
 const initialValues: CheckoutFormInitialValues = {
   billingInformation: {
@@ -96,6 +106,16 @@ type Props = {};
 
 const Checkout = (props: Props) => {
   const [currentStep, setCurrentStep] = useState(FORM_STEP.BILLING);
+
+  const cart = useSelector((state: RootState) => state.cart.cart);
+
+  const orderMutate = useMutation({
+    mutationFn: postOrder,
+    onSuccess: async (data, variables, context) => {
+      variables.stripe?.redirectToCheckout({ sessionId: data.id });
+    },
+  });
+
   const handleSubmit = (
     values: CheckoutFormInitialValues,
     actions: FormikHelpers<CheckoutFormInitialValues>
@@ -117,6 +137,25 @@ const Checkout = (props: Props) => {
       actions.setFieldTouched("email", false);
       actions.setFieldTouched("phoneNumber", false);
     }
+
+    if (currentStep === FORM_STEP.PAYMENT) {
+      makePayment(values);
+    }
+  };
+
+  const makePayment = async (values: CheckoutFormInitialValues) => {
+    const stripe = await stripe_promise;
+
+    const request_body = {
+      username: [
+        values.billingInformation.firstName,
+        values.billingInformation.lastName,
+      ].join(" "),
+      email: values.email,
+      products: cart.map((item) => ({ id: item.item.id, count: item.count })),
+    };
+
+    orderMutate.mutate({ request_body, stripe });
   };
 
   return (
