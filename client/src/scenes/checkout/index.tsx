@@ -82,8 +82,8 @@ const validationSchema = [
     }),
   }),
   Yup.object().shape({
-    email: Yup.string().required(),
-    phoneNumber: Yup.string().required(),
+    email: Yup.string().required("required"),
+    phoneNumber: Yup.string().required("required"),
   }),
 ];
 
@@ -112,10 +112,11 @@ const Checkout = (props: Props) => {
       });
     }
 
-    console.log(currentStep);
-
-    console.log(values);
-    console.log(actions);
+    // when the next btn is pressed for some reason touched states of the email and phoneNumber are  set to true. So I set it back to false since user won't have touched those field before clicking next. Because he/she can't. UI won't be rendered until user clicked next btn.
+    if (currentStep === FORM_STEP.BILLING) {
+      actions.setFieldTouched("email", false);
+      actions.setFieldTouched("phoneNumber", false);
+    }
   };
 
   return (
@@ -151,6 +152,8 @@ const Checkout = (props: Props) => {
           initialValues={initialValues}
           onSubmit={handleSubmit}
           validationSchema={validationSchema[currentStep]}
+          validateOnChange={true}
+          validateOnBlur={true}
         >
           {({
             values,
@@ -204,10 +207,6 @@ const Checkout = (props: Props) => {
               )}
             </form>
           )}
-          {/* if step 1 then Step 1 form */}
-          {/* if step 2 then Step 2form */}
-          {/* if step 1 show next button */}
-          {/* if step 2 show two buttons prev and place order */}
         </Formik>
       </div>
     </section>
