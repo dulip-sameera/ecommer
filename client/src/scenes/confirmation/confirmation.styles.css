@@ -1,0 +1,31 @@
+.confirmation {
+  margin-top: 5rem;
+  margin-bottom: 15rem;
+}
+
+.confirmation__container {
+  width: 80%;
+  margin: 0 auto;
+  background-color: rgba(90, 228, 90, 0.1);
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.confirmation__heading {
+  display: flex;
+  gap: 1rem;
+}
+
+.confirmation__heading--icon {
+  width: 2rem;
+  color: rgb(90, 228, 90);
+}
+
+.confirmation__heading--h1 {
+  color: rgb(90, 228, 90);
+}
+
+.confirmation__message {
+  padding-left: 3rem;
+  color: rgb(56, 135, 56);
+}
