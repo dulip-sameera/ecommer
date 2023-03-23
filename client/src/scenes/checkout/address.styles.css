@@ -1,8 +1,3 @@
-.form__address__input__header {
-  font-size: large;
-  font-weight: 500;
-}
-
 .form__address__input_container {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
